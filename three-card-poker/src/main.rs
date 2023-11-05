@@ -5,6 +5,9 @@
 // For CS 411 Fall 2023
 
 use itertools::Itertools;
+#[macro_use]
+extern crate prettytable;
+use prettytable::Table;
 
 fn generate_hand() {
     // Generate every possible 3 card hand from a standard 52 card deck and determine which category the hand belongs to.
@@ -23,17 +26,23 @@ fn generate_hand() {
         }
     }
 
-    // Utilize permutations to generate every possible 3 card hand.
+    // Utilize permutations & combinations to generate every possible 3 card hand.
 
-    let hands = deck.iter().permutations(3);
+    let hand_size = 3;
 
-    let mut total_hands = 0;
+    let partial = deck.iter().permutations(hand_size);
 
-    for _ in hands {
-        total_hands += 1;
-    }
+    let hands = deck.iter().combinations(hand_size);
 
-    println!("Total hands: {}", total_hands);
+    // System Diagnostics
+
+    println!(
+        "With a deck of {} cards, there are {} permutations and {} combinations of {} card hands.",
+        deck.len(),
+        partial.clone().count(),
+        hands.clone().count(),
+        hand_size
+    );
 }
 
 fn payout_table() {
@@ -46,16 +55,52 @@ fn payout_table() {
     const PAIR: u32 = 1;
     const HIGH_CARD: u32 = 0;
 
-    for payout in [
+    let mut table = Table::new();
+
+    table.add_row(row![
+        "HAND",
+        "DESCRIPTION",
+        "FREQUENCY",
+        "PROBABILITY",
+        "PAYOUT",
+        "RETURN"
+    ]);
+    table.add_row(row![
+        "Straight Flush",
+        "3 suited in sequence",
+        "--",
+        "--",
         STRAIGHT_FLUST,
+        "--"
+    ]);
+    table.add_row(row![
+        "Three of a Kind",
+        "3 of the same rank",
+        "--",
+        "--",
         THREE_OF_A_KIND,
+        "--"
+    ]);
+    table.add_row(row![
+        "Straight",
+        "3 in sequence (includes AKQ)",
+        "--",
+        "--",
         STRAIGHT,
-        FLUSH,
-        PAIR,
+        "--"
+    ]);
+    table.add_row(row!["Flush", "3 suited", "--", "--", FLUSH, "--"]);
+    table.add_row(row!["Pair", "2 of the same rank", "--", "--", PAIR, "--"]);
+    table.add_row(row![
+        "High Card",
+        "None of the above",
+        "--",
+        "--",
         HIGH_CARD,
-    ] {
-        print!("{} ", payout);
-    }
+        "--"
+    ]);
+
+    table.printstd();
 }
 
 fn main() {
@@ -72,7 +117,7 @@ fn main() {
     payout_table();
 
     println!(
-        "\n[ Current Bet: ${} | Total Return: ${} ]",
+        "Current Bet: ${}                                                               Total Return: ${}",
         bet, total_return
     );
 }
