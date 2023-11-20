@@ -1,0 +1,22 @@
+{
+  "name": "quickhull",
+  "version": "1.0.0",
+  "description": "Analysis of Algorithms projects from the Fall 2023 semester at UAF.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node quickhull/benchmark.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechSolomon/cs411.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechSolomon/cs411/issues"
+  },
+  "homepage": "https://github.com/TechSolomon/cs411#readme",
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  }
+}
