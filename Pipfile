@@ -11,6 +11,9 @@ pandas = "*"
 [dev-packages]
 black = "*"
 ipykernel = "*"
+notebook = "*"
+nbconvert = "*"
+pandoc = "*"
 
 [requires]
 python_version = "3.11"
